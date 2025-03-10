@@ -5,8 +5,6 @@ import PatternView from './components/PatternView';
 
 const { width, height } = Dimensions.get("window");
 
-// const AnimatedG = Animated.createAnimatedComponent(G);
-
 export default function App() {
 
     return (
@@ -15,7 +13,7 @@ export default function App() {
             maskConfig={{duration: 2000, animate: true}}
             backgroundColor='black'
         >
-            <Text style={{color:'white', marginTop: 100}}> Hello</Text>
+            <Text style={{color:'white', marginTop: 100}}> Hello World </Text>
             <StatusBar style="light" />
         </PatternView>
     );

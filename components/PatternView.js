@@ -6,8 +6,8 @@ import Animated, {
     withTiming,
     withRepeat,
 } from "react-native-reanimated";
-import { useEffect } from 'react';
-import { Text, View } from "react-native";
+import { useEffect, useMemo } from 'react';
+import { View } from "react-native";
 
 
 const AnimatedG = Animated.createAnimatedComponent(G);
@@ -46,10 +46,7 @@ const defaultMaskConfig = {
     gradientPosition: {x1: '0', y1: '0.25', x2: '1', y2: '1'},
 }
 
-
 const Mask = ({ config }) => {
-    
-    config = {...defaultMaskConfig, ...config};
     const translateY = useSharedValue(config.translateYRange[0]);
 
     const animatedProps = useAnimatedProps(() => ({
@@ -87,8 +84,6 @@ const Mask = ({ config }) => {
 };
 
 const Grid = ({ config }) => {
-    config = { ...defaultGridConfig, ...config };
-
     return <Svg height={config.svgHeight} width={config.svgWidth}>
         <Defs>
             <Pattern
@@ -120,14 +115,25 @@ const Grid = ({ config }) => {
     </Svg>;
 };
 
-export default function PatternView({ gridConfig, maskConfig, backgroundColor='black', children }) {
-    return <View style={{ flex: 1, backgroundColor }}>
+export default function PatternView({ gridConfig, maskConfig, style, children }) {
 
+    const mergedGridConfig = useMemo(() => ({
+        ...defaultGridConfig,
+        ...gridConfig,
+    }), [gridConfig]);
+
+    const mergedMaskConfig = useMemo(() => ({
+        ...defaultMaskConfig,
+        ...maskConfig,
+    }), [maskConfig]);
+
+
+    return <View style={[{ flex: 1, backgroundColor: 'black' }, style]}>
         <MaskedView
             style={{ position: 'absolute', width: '100%', height: '100%' }}
-            maskElement={<Mask config={maskConfig}/>}
+            maskElement={<Mask config={mergedMaskConfig}/>}
         >
-            <Grid config={gridConfig} />
+            <Grid config={mergedGridConfig} />
         </MaskedView>
         {children}
     </View>;
