@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "test-ui",
-    "slug": "test-ui",
+    "name": "re-ui",
+    "slug": "re-ui",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
